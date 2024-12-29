@@ -1,18 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: ceph-csi
 resources:
   - namespace.yml
-  - sealed-secret.yml
+  - sealed-secret-rbd.yml
+  - sealed-secret-cephfs.yml
   - storageclass.yml
 helmCharts:
   - name: ceph-csi-rbd
     repo: https://ceph.github.io/csi-charts
     version: 3.13.0
-    namespace: ceph-csi
+    namespace: ceph-csi-rbd
     releaseName: ceph-csi-rbd
   - name: ceph-csi-cephfs
     repo: https://ceph.github.io/csi-charts
     version: 3.13.0
-    namespace: ceph-csi
+    namespace: ceph-csi-cephfs
     releaseName: ceph-csi-cephfs

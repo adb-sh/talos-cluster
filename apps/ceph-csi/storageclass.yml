@@ -9,8 +9,8 @@ parameters:
   imageFeatures: layering
   monitors: 10.10.0.20:6789
   csi.storage.k8s.io/provisioner-secret-name: ceph-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: ceph-csi
+  csi.storage.k8s.io/provisioner-secret-namespace: ceph-csi-rbd
   csi.storage.k8s.io/node-stage-secret-name: ceph-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: ceph-csi
+  csi.storage.k8s.io/node-stage-secret-namespace: ceph-csi-rbd
 reclaimPolicy: Retain
 allowVolumeExpansion: true
