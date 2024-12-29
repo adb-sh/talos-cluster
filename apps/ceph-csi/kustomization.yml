@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: ceph-csi
 resources:
   - namespace.yml
+  - sealed-secret.yml
+  - storageclass.yml
 helmCharts:
   - name: ceph-csi-rbd
     repo: https://ceph.github.io/csi-charts
