@@ -7,3 +7,5 @@ helmCharts:
     version: 7.7.7
     valuesFile: values-argocd.yml
     namespace: argocd
+    includeCRDs: true
+    releaseName: argocd
