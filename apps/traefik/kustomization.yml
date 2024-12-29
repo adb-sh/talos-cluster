@@ -8,3 +8,4 @@ helmCharts:
     repo: https://traefik.github.io/charts
     version: 33.2.1
     namespace: traefik
+    releaseName: traefik
