@@ -11,8 +11,12 @@ helmCharts:
     version: 3.13.0
     namespace: ceph-csi-rbd
     releaseName: ceph-csi-rbd
+    valuesInline:
+      selinuxMount: false
   - name: ceph-csi-cephfs
     repo: https://ceph.github.io/csi-charts
     version: 3.13.0
     namespace: ceph-csi-cephfs
     releaseName: ceph-csi-cephfs
+    valuesInline:
+      selinuxMount: false
