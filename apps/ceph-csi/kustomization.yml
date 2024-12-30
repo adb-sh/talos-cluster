@@ -4,7 +4,6 @@ resources:
   - namespace.yml
   - sealed-secret-rbd.yml
   - sealed-secret-cephfs.yml
-  - storageclass.yml
 helmCharts:
   - name: ceph-csi-rbd
     repo: https://ceph.github.io/csi-charts
@@ -17,6 +16,18 @@ helmCharts:
         - clusterID: "eb00303d-49ad-4df9-aab9-78c28322d497"
           monitors:
             - "10.10.0.20:6789"
+      storageClass:
+        create: true
+        name: csi-rbd-sc
+        clusterID: "eb00303d-49ad-4df9-aab9-78c28322d497"
+        pool: talos-csi
+        imageFeatures: layering
+        provisionerSecret: csi-rbd-secret
+        provisionerSecretNamespace: ceph-csi-rbd
+        nodeStageSecret: csi-rbd-secret
+        nodeStageSecretNamespace: ceph-csi-rbd
+        reclaimPolicy: Retain
+        allowVolumeExpansion: true
   - name: ceph-csi-cephfs
     repo: https://ceph.github.io/csi-charts
     version: 3.13.0
