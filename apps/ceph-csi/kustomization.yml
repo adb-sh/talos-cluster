@@ -13,6 +13,10 @@ helmCharts:
     releaseName: ceph-csi-rbd
     valuesInline:
       selinuxMount: false
+      csiConfig:
+        - clusterID: "eb00303d-49ad-4df9-aab9-78c28322d497"
+          monitors:
+            - "10.10.0.20:6789"
   - name: ceph-csi-cephfs
     repo: https://ceph.github.io/csi-charts
     version: 3.13.0
@@ -20,3 +24,7 @@ helmCharts:
     releaseName: ceph-csi-cephfs
     valuesInline:
       selinuxMount: false
+      csiConfig:
+        - clusterID: "eb00303d-49ad-4df9-aab9-78c28322d497"
+          monitors:
+            - "10.10.0.20:6789"
