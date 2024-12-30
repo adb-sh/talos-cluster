@@ -39,3 +39,15 @@ helmCharts:
         - clusterID: "eb00303d-49ad-4df9-aab9-78c28322d497"
           monitors:
             - "10.10.0.20:6789"
+      storageClass:
+        create: true
+        name: csi-cephfs-sc
+        clusterID: "eb00303d-49ad-4df9-aab9-78c28322d497"
+        fsName: talos-csi-cephfs
+        pool: talos-csi-cephfs_data
+        provisionerSecret: csi-cephfs-secret
+        provisionerSecretNamespace: ceph-csi-cephfs
+        nodeStageSecret: csi-cephfs-secret
+        nodeStageSecretNamespace: ceph-csi-cephfs
+        reclaimPolicy: Retain
+        allowVolumeExpansion: true
