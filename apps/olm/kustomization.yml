@@ -4,3 +4,4 @@ resources:
   - https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.30.0/crds.yaml
   - https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.30.0/olm.yaml
   - cnpg.yml
+  - redis.yml
