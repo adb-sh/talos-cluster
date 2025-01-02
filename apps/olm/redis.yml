@@ -4,7 +4,7 @@ metadata:
   name: redis
   namespace: operators
 spec:
-  channel: stable-v1
+  channel: stable
   name: redis-operator
   source: operatorhubio-catalog
   sourceNamespace: olm
