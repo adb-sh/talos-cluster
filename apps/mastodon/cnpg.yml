@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: mastodon-db
+  namespace: mastodon
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: mastodon
+      owner: mastodon
+  storage:
+    storageClass: longhorn
+    size: 10Gi
