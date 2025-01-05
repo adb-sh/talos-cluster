@@ -11,3 +11,8 @@ externalDatabase:
 
 global:
   storageClass: "csi-rbd-sc"
+
+apache:
+  ingress:
+    enabled: true
+    hostname: social.cybre.town
