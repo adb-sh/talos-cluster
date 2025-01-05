@@ -2,7 +2,7 @@ postgresql:
   enabled: false
 
 externalDatabase:
-  host: mastodon-db
+  host: mastodon-db-rw
   port: 5432
   user: mastodon
   database: mastodon
