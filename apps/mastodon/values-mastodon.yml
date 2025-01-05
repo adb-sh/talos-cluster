@@ -8,3 +8,6 @@ externalDatabase:
   database: mastodon
   existingSecret: mastodon-db-app
   existingSecretPasswordKey: password
+
+global:
+  storageClass: "csi-rbd-sc"

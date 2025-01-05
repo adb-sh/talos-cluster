@@ -10,5 +10,5 @@ spec:
       database: mastodon
       owner: mastodon
   storage:
-    storageClass: longhorn
+    storageClass: csi-rbd-sc
     size: 10Gi
