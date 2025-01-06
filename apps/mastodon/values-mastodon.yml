@@ -9,14 +9,15 @@ externalDatabase:
   existingSecret: mastodon-db-app
   existingSecretPasswordKey: password
 
+enableSearches: false
 elasticsearch:
   enabled: false
 
-externalElasticsearch:
-  host: https://mastodon-elasticsearch-es-http
-  port: 9200
-  existingSecret: mastodon-elasticsearch-es-elastic-user
-  existingSecretPasswordKey: elastic
+# externalElasticsearch:
+#   host: https://mastodon-elasticsearch-es-http
+#   port: 9200
+#   existingSecret: mastodon-elasticsearch-es-elastic-user
+#   existingSecretPasswordKey: elastic
 
 global:
   storageClass: "csi-rbd-sc"
