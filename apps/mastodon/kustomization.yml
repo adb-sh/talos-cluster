@@ -4,6 +4,7 @@ namespace: mastodon
 resources:
   - namespace.yml
   - cnpg.yml
+  - elasticsearch.yml
 helmCharts:
   - name: mastodon
     repo: oci://registry-1.docker.io/bitnamicharts/
