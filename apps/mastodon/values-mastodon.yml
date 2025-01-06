@@ -13,7 +13,7 @@ elasticsearch:
   enabled: false
 
 externalElasticsearch:
-  host: mastodon-elasticsearch-es-http
+  host: https://mastodon-elasticsearch-es-http
   port: 9200
   existingSecret: mastodon-elasticsearch-es-elastic-user
   existingSecretPasswordKey: elastic
@@ -25,3 +25,11 @@ apache:
   ingress:
     enabled: true
     hostname: social.cybre.town
+
+enableS3: false
+minio:
+  enabled: false
+
+persistence:
+  enabled: true
+  size: 8Gi
