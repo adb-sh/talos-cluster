@@ -40,6 +40,9 @@ redis-cluster:
   enabled: false
 redis:
   enabled: true
+  master:
+    persistence:
+      storageClass: "csi-rbd-sc"
 
 persistence:
   enabled: true
@@ -47,3 +50,6 @@ persistence:
   storageClass: "csi-rbd-sc"
   accessModes:
     - ReadWriteOnce
+
+test:
+  enabled: false
