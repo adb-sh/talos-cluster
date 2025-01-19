@@ -1,0 +1,16 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: gitea-db
+  namespace: gitea
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: gitea
+      owner: gitea
+      postInitTemplateSQL:
+        - CREATE SCHEMA IF NOT EXISTS gitea AUTHORIZATION gitea;
+  storage:
+    storageClass: csi-rbd-sc
+    size: 10Gi

@@ -1,0 +1,49 @@
+postgresql:
+  enabled: false
+postgresql-ha:
+  enabled: false
+
+gitea:
+  config:
+    APP_NAME: "CybreTown Git"
+    database:
+      DB_TYPE: postgres
+      SCHEMA: gitea
+  additionalConfigFromEnvs:
+    - name: GITEA__DATABASE__HOST
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: host
+    - name: GITEA__DATABASE__PORT
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: port
+    - name: GITEA__DATABASE__NAME
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: dbname
+    - name: GITEA__DATABASE__USER
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: user
+    - name: GITEA__DATABASE__PASSWD
+      valueFrom:
+        secretKeyRef:
+          name: gitea-db-app
+          key: password
+
+redis-cluster:
+  enabled: false
+redis:
+  enabled: true
+
+persistence:
+  enabled: true
+  size: 16Gi
+  storageClass: "csi-rbd-sc"
+  accessModes:
+    - ReadWriteOnce
