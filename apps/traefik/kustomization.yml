@@ -9,3 +9,4 @@ helmCharts:
     version: 33.2.1
     namespace: traefik
     releaseName: traefik
+    includeCRDs: true
