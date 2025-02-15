@@ -9,8 +9,6 @@ spec:
     initdb:
       database: gitea
       owner: gitea
-      postInitTemplateSQL:
-        - CREATE SCHEMA IF NOT EXISTS gitea AUTHORIZATION gitea;
   storage:
     storageClass: csi-rbd-sc
     size: 10Gi

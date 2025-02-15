@@ -3,12 +3,19 @@ postgresql:
 postgresql-ha:
   enabled: false
 
+# image:
+#   rootless: false
+
 gitea:
   config:
     APP_NAME: "CybreTown Git"
     database:
       DB_TYPE: postgres
-      SCHEMA: gitea
+      SCHEMA: ""
+    log:
+      LEVEL: Info
+    repository:
+      ROOT: /data/git/repositories
   additionalConfigFromEnvs:
     - name: GITEA__DATABASE__HOST
       valueFrom:
@@ -47,9 +54,30 @@ redis:
 persistence:
   enabled: true
   size: 16Gi
-  storageClass: "csi-rbd-sc"
+  storageClass: "csi-cephfs-sc"
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 
 test:
   enabled: false
+
+# service:
+#   http:
+#     type: LoadBalancer
+
+ingress:
+  enabled: true
+  apiVersion: networking.k8s.io/v1
+  ingressClassName: traefik
+  hosts:
+    - host: "git.cybre.town"
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: gitea-cert
+      hosts:
+        - "git.cybre.town"
+  annotations:
+    "cert-manager.io/cluster-issuer": "lets-encrypt"
+    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
