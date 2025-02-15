@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1beta1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  extraConfig:
+    kustomize.buildOptions: "--enable-helm"
+  server:
+    host: "argocd.adb.sh"
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      tls:
+        - secretName: argocd-cert
+          hosts:
+            - "argocd.adb.sh"
+      annotations:
+        "cert-manager.io/cluster-issuer": "lets-encrypt"
+        "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
+    insecure: true
+

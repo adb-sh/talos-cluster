@@ -1,5 +1,0 @@
-configs:
-  params:
-    redis.compression: none
-  cm:
-    kustomize.buildOptions: "--enable-helm"
