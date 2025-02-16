@@ -1,0 +1,30 @@
+domain: "https://vault.cybre.town"
+signupsAllowed: false
+
+storage:
+  data:
+    name: "vaultwarden-data"
+    class: csi-cephfs-sc
+    accessMode: "ReadWriteMany"
+    size: "16Gi"
+  attachments:
+    name: "vaultwarden-attachments"
+    class: csi-cephfs-sc
+    accessMode: "ReadWriteMany"
+    size: "64Gi"
+
+database:
+  type: "postgresql"
+  existingSecret: "vaultwarden-db-app"
+  existingSecretKey: "uri"
+
+ingress:
+  enabled: true
+  class: traefik
+  nginxIngressAnnotations: false
+  hostname: "vault.cybre.town"
+  tls: true
+  tlsSecret: vaultwarden-cert
+  additionalAnnotations:
+    "cert-manager.io/cluster-issuer": "lets-encrypt"
+    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
