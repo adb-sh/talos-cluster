@@ -10,16 +10,16 @@ helmCharts:
     valuesInline:
       server:
         resources:
-        limits:
-          cpu: 2
-          memory: "6Gi"
-        requests:
-          cpu: 1
-          memory: "4Gi"
+          limits:
+            cpu: 2
+            memory: "6Gi"
+          requests:
+            cpu: 2
+            memory: "4Gi"
         storage:
           main:
             size: 12Gi
             storageClassName: "csi-rbd-sc"
         service:
-        enabled: true
-        type: LoadBalancer
+          enabled: true
+          type: LoadBalancer
