@@ -1,6 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: palworld-01
+resources:
+  - sealed-secret.yml
 helmCharts:
   - name: palworld
     repo: oci://ghcr.io/twinki14/palworld-server-chart/
@@ -23,3 +25,11 @@ helmCharts:
         service:
           enabled: true
           type: LoadBalancer
+        config:
+          server_name: "Kubernetes - the home of pals"
+          server_description: "legendary"
+          community:
+            enable: true
+            externalPassword:
+              name: palworld-server-password
+              key: password
