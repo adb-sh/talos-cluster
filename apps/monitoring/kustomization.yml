@@ -43,6 +43,13 @@ helmCharts:
             defaultMode: 0440
             mountPath: /etc/secrets/auth_generic_oauth
             readOnly: true
+        persistence:
+          type: pvc
+          enabled: true
+          storageClassName: csi-rbd-sc
+          accessModes:
+            - ReadWriteOnce
+          size: 10Gi
         ingress:
           enabled: true
           ingressClassName: traefik
