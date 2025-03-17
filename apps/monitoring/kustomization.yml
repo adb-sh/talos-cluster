@@ -44,7 +44,7 @@ helmCharts:
             mountPath: /etc/secrets/auth_generic_oauth
             readOnly: true
         persistence:
-          type: pvc
+          type: sts
           enabled: true
           storageClassName: csi-rbd-sc
           accessModes:
