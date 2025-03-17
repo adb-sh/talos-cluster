@@ -20,6 +20,7 @@ helmCharts:
         grafana.ini:
           server:
             domain: grafana.adb.sh
+            root_url: "https://%(domain)s/"
             serve_from_sub_path: false
           auth:
             disable_login_form: true
