@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - namespace.yml
+helmCharts:
+  - name: kube-prometheus-stack
+    repo: https://prometheus-community.github.io/helm-charts
+    version: 70.0.2
+    namespace: monitoring
+    releaseName: kube-prometheus-stack
+    includeCRDs: true
+    valuesInline:
+      grafana:
+        sidecar:
+          dashboards:
+            enabled: true
+            searchNamespace: ALL
+        ingress:
+          enabled: true
+          ingressClassName: traefik
+          hosts:
+            - grafana.adb.sh
+          path: /
+          tls:
+            - secretName: grafana-cert
+              hosts:
+                - grafana.adb.sh
+          annotations:
+            "cert-manager.io/cluster-issuer": "lets-encrypt"
+            "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
