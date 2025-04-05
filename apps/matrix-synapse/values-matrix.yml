@@ -1,0 +1,52 @@
+externalPostgresql:
+  enabled: true
+  existingSecret:
+    name: matrix-db-app
+    keys:
+      host: host
+      port: port
+      database: dbname
+      username: user
+      password: password
+
+config:
+  server:
+    server_name: "adb.sh"
+    public_baseurl: "https://matrix.adb.sh/"
+    serve_server_wellknown: true
+  mediaStore:
+    enable_media_repo: true
+    persistence:
+      enabled: true
+      size: 64Gi
+      accessMode: ReadWriteMany
+      storageClassName: "csi-cephfs-sc"
+signingkey:
+  job:
+    enabled: false
+  existingSecret: "signingkey"
+  existingSecretKey: "signingkey"
+
+resources:
+  limits:
+    cpu: 1500m
+    memory: 4Gi
+  requests:
+    cpu: 1500m
+    memory: 3Gi
+
+ingress:
+  enabled: true
+  className: traefik
+  annotations:
+    "cert-manager.io/cluster-issuer": "lets-encrypt"
+    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
+  hosts:
+    - host: matrix.adb.sh
+      paths:
+        - path: "/"
+          pathType: Prefix
+  tls:
+    - secretName: matrix-cert
+      hosts:
+        - "matrix.adb.sh"

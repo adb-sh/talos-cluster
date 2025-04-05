@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: matrix
+resources:
+  - namespace.yml
+  - cnpg.yml
+  - sealed-secret-signingkey.yml
+  - middleware-cors.yml
+helmCharts:
+  - name: matrix-synapse
+    repo: https://charts.schoenwald.aero
+    version: 1.0.8
+    namespace: matrix
+    releaseName: matrix
+    valuesFile: values-matrix.yml

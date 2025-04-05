@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: matrix-db
+  namespace: matrix
+spec:
+  instances: 1
+  bootstrap:
+    initdb:
+      database: matrix
+      owner: matrix
+  storage:
+    storageClass: csi-rbd-sc
+    size: 96Gi
