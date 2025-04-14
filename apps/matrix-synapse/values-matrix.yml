@@ -56,6 +56,9 @@ workers:
   frontend_proxy:
     enabled: false
 
+wellknown:
+  enabled: true
+
 ingress:
   enabled: true
   className: traefik
