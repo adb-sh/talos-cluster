@@ -11,4 +11,4 @@ spec:
       owner: matrix
   storage:
     storageClass: csi-rbd-sc
-    size: 128Gi
+    size: 256Gi
