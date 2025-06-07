@@ -1,0 +1,57 @@
+postgresql:
+  enabled: false
+
+redis:
+  enabled: true
+  master:
+    persistence:
+      storageClass: "csi-rbd-sc"
+
+env:
+  PRETIX_PRETIX_INSTANCE_NAME: Silvaica Tickets
+  PRETIX_PRETIX_URL: https://tickets.silvatica.site
+  PRETIX_PRETIX_CURRENCY: EUR
+
+extraEnv:
+  - name: PRETIX_DATABASE_NAME
+    valueFrom:
+      secretKeyRef:
+        name: pretix-db-app
+        key: dbname
+  - name: PRETIX_DATABASE_USER
+    valueFrom:
+      secretKeyRef:
+        name: pretix-db-app
+        key: user
+  - name: PRETIX_DATABASE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: pretix-db-app
+        key: password
+  - name: PRETIX_DATABASE_HOST
+    valueFrom:
+      secretKeyRef:
+        name: pretix-db-app
+        key: host
+
+persistence:
+  enabled: true
+  storageClassName: "csi-cephfs-sc"
+  accessMode: ReadWriteMany
+  size: 16Gi
+
+ingress:
+  enabled: true
+  ingressClassName: "traefik"
+  hosts:
+    - host: tickets.silvatica.site
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: pretix-cert
+      hosts:
+        - "tickets.silvatica.site"
+  annotations:
+    "cert-manager.io/cluster-issuer": "lets-encrypt"
+    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
