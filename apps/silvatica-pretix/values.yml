@@ -14,7 +14,7 @@ env:
   PRETIX_MAIL_FROM: noreply@silvatica.site
   PRETIX_MAIL_HOST: mail.adb.sh
   PRETIX_MAIL_USER: noreply@silvatica.site
-  PRETIX_MAIL_PORT: 465
+  PRETIX_MAIL_PORT: 587
   PRETIX_MAIL_TLS: True
 
 extraEnv:
