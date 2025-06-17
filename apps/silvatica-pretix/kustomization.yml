@@ -4,6 +4,7 @@ namespace: silvatica-pretix
 resources:
   - namespace.yml
   - cnpg.yml
+  - sealed-secret-mail.yml
 helmCharts:
   - name: pretix
     repo: https://helm.techwolf12.nl/
