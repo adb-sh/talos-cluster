@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: hedgedoc
+resources:
+  - cnpg.yml
+helmCharts:
+  - name: hedgedoc
+    repo: oci://ghcr.io/ernail/charts
+    version: 2.0.0
+    namespace: hedgedoc
+    releaseName: hedgedoc
+    valuesFile: values-hedgedoc.yml
