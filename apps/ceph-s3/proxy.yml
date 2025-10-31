@@ -1,0 +1,157 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiosgw-proxy
+  namespace: ceph-s3
+  labels:
+    app: radiosgw
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: radiosgw
+  template:
+    metadata:
+      labels:
+        app: radiosgw
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:mainline-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: tcp-config
+              mountPath: /etc/nginx/stream-conf
+              readOnly: true
+          command:
+            [
+              "nginx",
+              "-g",
+              "daemon off;",
+              "-c",
+              "/etc/nginx/stream-conf/tcp.conf",
+            ]
+      volumes:
+        - name: tcp-config
+          configMap:
+            name: radiosgw-nginx-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: radiosgw-nginx-config
+  namespace: ceph-s3
+data:
+  tcp.conf: |
+    events {
+        worker_connections 1024;
+    }
+
+    stream {
+        upstream radiosgw_upstream {
+            server 10.10.0.20:7480;
+        }
+
+        server {
+            listen 80;
+            proxy_pass radiosgw_upstream;
+        }
+    }
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radiosgw-proxy
+  namespace: ceph-s3
+spec:
+  selector:
+    app: radiosgw
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: radiosgw
+  namespace: ceph-s3
+  annotations:
+    "cert-manager.io/cluster-issuer": "lets-encrypt"
+    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: s3.adb.sh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: radiosgw-proxy
+                port:
+                  number: 80
+  tls:
+    - secretName: s3-adb-cert
+      hosts:
+        - "s3.adb.sh"
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: radiosgw
+#   namespace: ceph-s3
+# spec:
+#   ports:
+#     - name: s3
+#       port: 7480
+#       protocol: TCP
+#       targetPort: 7480
+
+# ---
+# apiVersion: discovery.k8s.io/v1
+# kind: EndpointSlice
+# metadata:
+#   name: radiosgw-1
+#   namespace: ceph-s3
+#   labels:
+#     kubernetes.io/service-name: radiosgw
+# addressType: IPv4
+# ports:
+#   - name: s3
+#     port: 7480
+#     protocol: TCP
+# endpoints:
+#   - addresses:
+#       - "10.10.0.20"
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: radiosgw
+#   namespace: ceph-s3
+#   annotations:
+#     "cert-manager.io/cluster-issuer": "lets-encrypt"
+#     "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
+# spec:
+#   ingressClassName: traefik
+#   rules:
+#     - host: s3.adb.sh
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: radiosgw
+#                 port:
+#                   name: s3
+#   tls:
+#     - secretName: s3-adb-cert
+#       hosts:
+#         - "s3.adb.sh"
