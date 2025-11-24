@@ -2,13 +2,22 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: mastodon
 resources:
-  - namespace.yml
   - cnpg.yml
+  - sealed-secret-redis.yml
+  - sealed-secret-mastodon.yml
+  - sealed-secret-s3.yml
+  - sealed-secret-smtp.yml
   # - elasticsearch.yml
 helmCharts:
   - name: mastodon
-    repo: oci://registry-1.docker.io/bitnamicharts/
-    version: 9.1.1
+    repo: https://mastodon.github.io/helm-charts/
+    version: 0.2.4
     namespace: mastodon
     releaseName: mastodon
     valuesFile: values-mastodon.yml
+  - name: redis-ha
+    repo: https://dandydeveloper.github.io/charts
+    version: 4.35.2
+    namespace: mastodon
+    releaseName: redis-ha
+    valuesFile: values-redis.yml

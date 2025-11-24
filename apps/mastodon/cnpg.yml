@@ -4,11 +4,11 @@ metadata:
   name: mastodon-db
   namespace: mastodon
 spec:
-  instances: 1
+  instances: 3
   bootstrap:
     initdb:
       database: mastodon
       owner: mastodon
   storage:
     storageClass: csi-rbd-sc
-    size: 10Gi
+    size: 64Gi

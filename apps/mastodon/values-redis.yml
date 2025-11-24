@@ -1,0 +1,11 @@
+persistentVolume:
+  enabled: true
+  storageClass: csi-rbd-sc
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+auth: true
+existingSecret: redis
+authKey: password
+replicas: 3

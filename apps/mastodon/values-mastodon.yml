@@ -1,36 +1,99 @@
 postgresql:
-  enabled: false
-
-externalDatabase:
-  host: mastodon-db-rw
+  hostname: mastodon-db-rw
   port: 5432
-  user: mastodon
   database: mastodon
   existingSecret: mastodon-db-app
-  existingSecretPasswordKey: password
+  existingSecretKeys:
+    username: username
+    password: password
+  readReplica:
+    hostname: mastodon-db-ro
+    port: 5432
+    database: mastodon
+    existingSecret: mastodon-db-app
+    existingSecretKeys:
+      username: username
+      password: password
 
-enableSearches: false
+redis:
+  hostname: redis-ha-announce-0
+  port: 6379
+  existingSecret: redis
+  existingSecretKeys:
+    password: password
+
 elasticsearch:
   enabled: false
+  # existingSecret: foo
+  # existingSecretKeys:
+  #   username: username
+  #   password: password
 
-# externalElasticsearch:
-#   host: https://mastodon-elasticsearch-es-http
-#   port: 9200
-#   existingSecret: mastodon-elasticsearch-es-elastic-user
-#   existingSecretPasswordKey: elastic
+mastodon:
+  localDomain: cybre.town
+  webDomain: social.cybre.town
+  createAdmin:
+    enabled: false
+    username: admin
+    email: admin@adb.sh
 
-global:
-  storageClass: "csi-rbd-sc"
+  secrets:
+    existingSecret: mastodon
+    existingSecretKeys:
+      secretKeyBase: secret-key-base
+      vapidPrivateKey: vapid-private-key
+      vapidPublicKey: vapid-public-key
+      arePrimaryKey: are-primary-key
+      areDeterministicKey: are-deterministic-key
+      areKeyDerivationSalt: are-derivation-salt
 
-apache:
-  ingress:
+  s3:
     enabled: true
-    hostname: social.cybre.town
+    hostname: s3.adb.sh
+    endpoint: https://s3.adb.sh/
+    region: default
+    bucket: social-cybre-town-media
+    existingSecret: mastodon-s3
+    existingSecretKeys:
+      accessKeyId: access-key-id
+      secretAccessKey: secret-access-key
 
-enableS3: false
-minio:
-  enabled: false
+  smtp:
+    fromAddress: noreply@social.cybre.town
 
-persistence:
-  enabled: true
-  size: 8Gi
+    server: mail.adb.sh
+    port: "465"
+    tls: true
+    existingSecret: mastodon-smtp
+    existingSecretKeys:
+      username: username
+      password: password
+    bulk:
+      enabled: false
+
+  hooks:
+    dbPrepare:
+      enabled: true
+    dbMigrate:
+      enabled: true
+    # s3Upload:
+    #   enabled: false
+    #   existingSecret: foo
+    #   existingSecretKeys:
+    #     accessKeyId: access-key-id
+    #     secretAccessKey: secret-access-key
+
+ingress:
+  className: traefik
+  annotations:
+    "cert-manager.io/cluster-issuer": "lets-encrypt"
+    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
+  hosts:
+    - host: social.cybre.town
+      paths:
+        - path: "/"
+          pathType: Prefix
+  tls:
+    - secretName: mastodon-tls
+      hosts:
+        - social.cybre.town
