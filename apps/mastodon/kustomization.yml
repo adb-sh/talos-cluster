@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: mastodon
 resources:
   - cnpg.yml
+  - valkey.yml
   - sealed-secret-redis.yml
   - sealed-secret-mastodon.yml
   - sealed-secret-s3.yml
@@ -15,9 +16,9 @@ helmCharts:
     namespace: mastodon
     releaseName: mastodon
     valuesFile: values-mastodon.yml
-  - name: redis-ha
-    repo: https://dandydeveloper.github.io/charts
-    version: 4.35.2
-    namespace: mastodon
-    releaseName: redis-ha
-    valuesFile: values-redis.yml
+  # - name: redis-ha
+  #   repo: https://dandydeveloper.github.io/charts
+  #   version: 4.35.2
+  #   namespace: mastodon
+  #   releaseName: redis-ha
+  #   valuesFile: values-redis.yml

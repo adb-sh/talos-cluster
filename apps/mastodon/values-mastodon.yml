@@ -16,9 +16,9 @@ postgresql:
       password: password
 
 redis:
-  hostname: redis-ha-announce-0
+  hostname: mastodon-valkey
   port: 6379
-  existingSecret: redis
+  existingSecret: mastodon-valkey
   existingSecretKeys:
     password: password
 
