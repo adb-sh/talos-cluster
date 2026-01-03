@@ -50,12 +50,15 @@ mastodon:
   web:
     extraEnvVars:
       REDIS_SENTINELS: "redis-ha-announce-0,redis-ha-announce-1,redis-ha-announce-2"
+      REDIS_SENTINEL_MASTER: "mymaster"
   sidekiq:
     extraEnvVars:
       REDIS_SENTINELS: "redis-ha-announce-0,redis-ha-announce-1,redis-ha-announce-2"
+      REDIS_SENTINEL_MASTER: "mymaster"
   streaming:
     extraEnvVars:
       REDIS_SENTINELS: "redis-ha-announce-0,redis-ha-announce-1,redis-ha-announce-2"
+      REDIS_SENTINEL_MASTER: "mymaster"
 
   s3:
     enabled: true
