@@ -8,4 +8,4 @@ persistentVolume:
 auth: true
 existingSecret: redis
 authKey: password
-replicas: 3
+replicas: 1
