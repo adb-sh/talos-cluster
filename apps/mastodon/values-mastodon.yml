@@ -47,6 +47,16 @@ mastodon:
       areDeterministicKey: are-deterministic-key
       areKeyDerivationSalt: are-derivation-salt
 
+  web:
+    extraEnvVars:
+      REDIS_SENTINELS: "redis-ha-announce-0,redis-ha-announce-1,redis-ha-announce-2"
+  sidekiq:
+    extraEnvVars:
+      REDIS_SENTINELS: "redis-ha-announce-0,redis-ha-announce-1,redis-ha-announce-2"
+  streaming:
+    extraEnvVars:
+      REDIS_SENTINELS: "redis-ha-announce-0,redis-ha-announce-1,redis-ha-announce-2"
+
   s3:
     enabled: true
     hostname: s3.adb.sh
