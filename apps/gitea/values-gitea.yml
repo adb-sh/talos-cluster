@@ -68,7 +68,7 @@ test:
 ingress:
   enabled: true
   apiVersion: networking.k8s.io/v1
-  ingressClassName: traefik
+  ingressClassName: contour-external
   hosts:
     - host: "git.cybre.town"
       paths:
@@ -80,4 +80,3 @@ ingress:
         - "git.cybre.town"
   annotations:
     "cert-manager.io/cluster-issuer": "lets-encrypt"
-    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd

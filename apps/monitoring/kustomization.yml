@@ -52,7 +52,7 @@ helmCharts:
           size: 10Gi
         ingress:
           enabled: true
-          ingressClassName: traefik
+          ingressClassName: contour-external
           hosts:
             - grafana.adb.sh
           path: /
@@ -62,7 +62,6 @@ helmCharts:
                 - grafana.adb.sh
           annotations:
             "cert-manager.io/cluster-issuer": "lets-encrypt"
-            "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
 
       prometheus:
         prometheusSpec:

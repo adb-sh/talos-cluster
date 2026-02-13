@@ -20,11 +20,10 @@ database:
 
 ingress:
   enabled: true
-  class: traefik
+  class: contour-external
   nginxIngressAnnotations: false
   hostname: "vault.cybre.town"
   tls: true
   tlsSecret: vaultwarden-cert
   additionalAnnotations:
     "cert-manager.io/cluster-issuer": "lets-encrypt"
-    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd

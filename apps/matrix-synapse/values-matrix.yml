@@ -70,11 +70,10 @@ wellknown:
 
 ingress:
   enabled: true
-  className: traefik
+  className: contour-external
   traefikPaths: true
   annotations:
     "cert-manager.io/cluster-issuer": "lets-encrypt"
-    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
   hosts:
     - matrix.adb.sh
   # wkHosts:

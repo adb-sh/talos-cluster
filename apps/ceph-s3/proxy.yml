@@ -82,9 +82,8 @@ metadata:
   namespace: ceph-s3
   annotations:
     "cert-manager.io/cluster-issuer": "lets-encrypt"
-    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
 spec:
-  ingressClassName: traefik
+  ingressClassName: contour-external
   rules:
     - host: s3.adb.sh
       http:

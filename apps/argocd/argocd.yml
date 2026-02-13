@@ -10,13 +10,12 @@ spec:
     host: "argocd.adb.sh"
     ingress:
       enabled: true
-      ingressClassName: traefik
+      ingressClassName: contour-external
       tls:
         - secretName: argocd-cert
           hosts:
             - "argocd.adb.sh"
       annotations:
         "cert-manager.io/cluster-issuer": "lets-encrypt"
-        "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
+        # "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
     insecure: true
-

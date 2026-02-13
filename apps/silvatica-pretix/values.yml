@@ -52,7 +52,7 @@ persistence:
 
 ingress:
   enabled: true
-  ingressClassName: "traefik"
+  ingressClassName: "contour-external"
   hosts:
     - host: tickets.silvatica.site
       paths:
@@ -64,4 +64,3 @@ ingress:
         - "tickets.silvatica.site"
   annotations:
     "cert-manager.io/cluster-issuer": "lets-encrypt"
-    "traefik.ingress.kubernetes.io/router.middlewares": traefik-redirect-https@kubernetescrd
