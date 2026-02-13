@@ -69,7 +69,7 @@ wellknown:
   enabled: true
 
 ingress:
-  enabled: true
+  enabled: false
   className: contour-external
   traefikPaths: true
   annotations:
@@ -82,3 +82,8 @@ ingress:
     - secretName: matrix-cert
       hosts:
         - "matrix.adb.sh"
+
+gateway:
+  enabled: true
+  hosts:
+    - matrix.adb.sh
