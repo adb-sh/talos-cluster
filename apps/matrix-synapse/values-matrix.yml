@@ -37,6 +37,11 @@ persistence:
 workers:
   generic_worker:
     enabled: true
+    csPaths:
+      - "/_matrix/"
+
+    paths: []
+
   federation_reader:
     enabled: true
     generic: true
