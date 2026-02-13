@@ -10,7 +10,7 @@ resources:
 helmCharts:
   - name: matrix-synapse
     repo: https://ananace.gitlab.io/charts
-    version: 3.11.7
+    version: 3.12.19
     namespace: matrix
     releaseName: matrix
     valuesFile: values-matrix.yml
