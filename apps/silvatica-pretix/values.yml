@@ -2,13 +2,18 @@ postgresql:
   enabled: false
 
 redis:
-  enabled: true
+  enabled: false
   master:
     persistence:
       storageClass: "csi-rbd-sc"
 
+replicas:
+  pretixWeb: 3
+  pretixWorker: 5
+
 env:
-  PRETIX_PRETIX_INSTANCE_NAME: Silvaica Tickets
+  PRETIX_PRETIX_LOGLEVEL: INFO
+  PRETIX_PRETIX_INSTANCE_NAME: Silvatica Tickets
   PRETIX_PRETIX_URL: https://tickets.silvatica.site
   PRETIX_PRETIX_CURRENCY: EUR
   PRETIX_MAIL_FROM: noreply@silvatica.site
@@ -16,6 +21,18 @@ env:
   PRETIX_MAIL_USER: noreply@silvatica.site
   PRETIX_MAIL_PORT: 587
   PRETIX_MAIL_TLS: True
+  # PRETIX_REDIS_LOCATION: redis://pretix-valkey/0
+  PRETIX_REDIS_LOCATION: redis://mymaster/0
+  PRETIX_REDIS_SESSIONS: true
+  PRETIX_REDIS_SENTINELS: |
+    [
+        ["redis-ha-announce-0", 26379],
+        ["redis-ha-announce-1", 26379],
+        ["redis-ha-announce-2", 26379]
+    ]
+  PRETIX_CELERY_BACKEND: ""
+  PRETIX_CELERY_BROKER: ""
+  PRETIX_REPLICA_HOST: pretix-db-ro
 
 extraEnv:
   - name: PRETIX_DATABASE_NAME
@@ -43,6 +60,21 @@ extraEnv:
       secretKeyRef:
         name: pretix-mail
         key: password
+  # - name: PRETIX_REDIS_PASSWORD
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: pretix-valkey
+  #       key: password
+  - name: PRETIX_REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: redis
+        key: password
+  - name: PRETIX_CELERY_BROKER
+    valueFrom:
+      secretKeyRef:
+        name: pretix-rabbitmq-default-user
+        key: connection_string
 
 persistence:
   enabled: true

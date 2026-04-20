@@ -1,0 +1,17 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: pretix-rabbitmq
+  namespace: silvatica-pretix
+spec:
+  persistence:
+    storage: 10Gi
+    storageClassName: csi-rbd-sc
+  replicas: 3
+  resources:
+    limits:
+      cpu: 2
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 256Mi

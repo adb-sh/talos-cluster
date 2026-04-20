@@ -4,11 +4,20 @@ namespace: silvatica-pretix
 resources:
   - namespace.yml
   - cnpg.yml
+  - rabbitmq-cluster.yml
+  # - valkey.yml # apparently no cluster support yet
+  - sealed-secret-redis.yml
   - sealed-secret-mail.yml
 helmCharts:
   - name: pretix
     repo: https://helm.techwolf12.nl/
-    version: 2025.4.0
+    version: 2025.8.0
     namespace: silvatica-pretix
     releaseName: pretix
     valuesFile: values.yml
+  - name: redis-ha
+    repo: https://dandydeveloper.github.io/charts
+    version: 4.35.2
+    namespace: silvatica-pretix
+    releaseName: redis-ha
+    valuesFile: values-redis.yml
