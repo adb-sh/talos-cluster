@@ -21,3 +21,16 @@ helmCharts:
     namespace: silvatica-pretix
     releaseName: redis-ha
     valuesFile: values-redis.yml
+  - name: valkey
+    repo: https://valkey.io/valkey-helm/
+    version: 0.9.4
+    namespace: silvatica-pretix
+    releaseName: valkey
+    valuesInline:
+      replica:
+        enabled: true
+        persistence:
+          size: "10Gi"
+          storageClass: "csi-rbd-sc"
+          accessModes:
+            - ReadWriteOnce

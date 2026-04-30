@@ -30,7 +30,8 @@ env:
         ["redis-ha-announce-1", 26379],
         ["redis-ha-announce-2", 26379]
     ]
-  PRETIX_CELERY_BACKEND: ""
+  # PRETIX_CELERY_BACKEND: ""
+  PRETIX_CELERY_BACKEND: "redis://valkey"
   PRETIX_CELERY_BROKER: ""
   PRETIX_REPLICA_HOST: pretix-db-ro
 
@@ -75,6 +76,11 @@ extraEnv:
       secretKeyRef:
         name: pretix-rabbitmq-default-user
         key: connection_string
+  # - name: PRETIX_CELERY_BACKEND
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: pretix-rabbitmq-default-user
+  #       key: connection_string
 
 persistence:
   enabled: true
